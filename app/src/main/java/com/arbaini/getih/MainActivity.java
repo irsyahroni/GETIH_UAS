@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity{
 
         tvNama.setText(stNama);
 
-//        cvJadiDonor.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this,JadiDonorActivity.class));
-//            }
-//        });
+        cvJadiDonor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,JadiDonorActivity.class));
+            }
+        });
 //
 //        cvCariDonor.setOnClickListener(new View.OnClickListener() {
 //            @Override
