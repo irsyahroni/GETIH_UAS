@@ -1,6 +1,8 @@
 package com.arbaini.getih;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,13 +13,23 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.arbaini.getih.Model.Users;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class SignupActivity extends AppCompatActivity {
 
     private EditText etNama, etEmail, etPass, etGolDar, etBB;
     private String stNama, stEmail, stPass, stUmur, stGolDar, stBB;
     private Button btnRegister;
-
+    private ProgressDialog progressDialog;
+    private FirebaseAuth auth;
     private android.widget.Spinner spinner1;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +38,22 @@ public class SignupActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Register");
 
+        auth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         etNama = findViewById(R.id.et_register_nama);
         etEmail = findViewById(R.id.et_register_email);
         etPass = findViewById(R.id.et_register_password);
         etBB = findViewById(R.id.et_register_bb);
-
         btnRegister = findViewById(R.id.btn_register);
-
-
-        spinner1 = (Spinner) findViewById(R.id.et_register_goldarah);
+        spinner1 = findViewById(R.id.et_register_goldarah);
         spinner1.setOnItemSelectedListener(new SpinnerSelectedListener());
 
+
+        progressDialog = new ProgressDialog(SignupActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,15 +85,42 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
 
-                Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("NAMA", stNama);
-                extras.putString("EMAIL", stEmail);
-                extras.putString("PASS", stPass);
-                extras.putString("GOLDAR", stGolDar);
-                extras.putString("BB", stBB);
-                intent.putExtras(extras);
-                startActivity(intent);
+                progressDialog.show();
+
+                auth.createUserWithEmailAndPassword(stEmail,stPass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        progressDialog.dismiss();
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignupActivity.this,"Register Gagal",Toast.LENGTH_SHORT).show();
+
+
+                        } else {
+
+                            String userId = auth.getCurrentUser().getUid();
+
+
+                            Users users = new Users(userId,"08998660666",stGolDar,stBB,stEmail);
+
+
+                            databaseReference.child("users").setValue(users);
+
+                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                            Bundle extras = new Bundle();
+                            extras.putString("NAMA", stNama);
+                            extras.putString("EMAIL", stEmail);
+                            extras.putString("PASS", stPass);
+                            extras.putString("GOLDAR", stGolDar);
+                            extras.putString("BB", stBB);
+                            intent.putExtras(extras);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
+
+
             }
         });
     }
