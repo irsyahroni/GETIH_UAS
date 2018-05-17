@@ -101,10 +101,9 @@ public class SignupActivity extends AppCompatActivity {
                             String userId = auth.getCurrentUser().getUid();
 
 
-                            Users users = new Users(userId,"08998660666",stGolDar,stBB,stEmail);
+                            Users users = new Users("08998660666",stGolDar,stBB,stEmail);
 
-
-                            databaseReference.child("users").setValue(users);
+                            databaseReference.child("users").child(userId).setValue(users);
 
                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                             Bundle extras = new Bundle();

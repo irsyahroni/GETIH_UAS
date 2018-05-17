@@ -11,7 +11,13 @@ public class Users {
         BeratBadan = beratBadan;
         Email = email;
     }
+    public Users( String noHp, String golDar, String beratBadan, String email) {
 
+        NoHp = noHp;
+        GolDar = golDar;
+        BeratBadan = beratBadan;
+        Email = email;
+    }
     public String getUserId() {
         return UserId;
     }
