@@ -2,22 +2,24 @@ package com.arbaini.getih.Model;
 
 public class Users {
 
-    private String UserId,NoHp,GolDar,BeratBadan,Email;
+    private String UserId;
+    private String NoHp;
+    private String GolDar;
+    private String BeratBadan;
+    private String Email;
 
-    public Users(String userId, String noHp, String golDar, String beratBadan, String email) {
-        UserId = userId;
+
+
+    private String Alamat;
+
+    public Users( String noHp, String golDar, String beratBadan, String email, String alamat) {
         NoHp = noHp;
         GolDar = golDar;
         BeratBadan = beratBadan;
         Email = email;
+        Alamat = alamat;
     }
-    public Users( String noHp, String golDar, String beratBadan, String email) {
 
-        NoHp = noHp;
-        GolDar = golDar;
-        BeratBadan = beratBadan;
-        Email = email;
-    }
     public String getUserId() {
         return UserId;
     }
@@ -56,5 +58,12 @@ public class Users {
 
     public void setEmail(String email) {
         Email = email;
+    }
+    public String getAlamat() {
+        return Alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        Alamat = alamat;
     }
 }

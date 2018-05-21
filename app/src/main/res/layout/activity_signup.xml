@@ -110,12 +110,37 @@
                     android:hint="Berat badan (Kg)"
                     android:inputType="textPersonName" />
 
+                <EditText
+                    android:id="@+id/et_register_nohp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_register_bb"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="36dp"
+                    android:layout_marginRight="36dp"
+                    android:layout_marginTop="24dp"
+                    android:ems="10"
+                    android:hint="Nomor Telepon"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/et_register_addrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_register_nohp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="36dp"
+                    android:layout_marginRight="36dp"
+                    android:layout_marginTop="24dp"
+                    android:ems="10"
+                    android:hint="Alamat"
+                    android:inputType="textPersonName" />
 
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/et_register_bb"
+                    android:layout_below="@+id/et_register_addrs"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="24dp"
                     android:layout_marginLeft="36dp"
