@@ -41,8 +41,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Users users = recordsList.get(position);
-        holder.rv_nama.setText(users.getNama());
-        holder.rv_detail.setText(users.getNoHp());
+        holder.rv_nama.setText(users.getEmail());
+        //holder.rv_detail.setText(users.getNoHp());
     }
 
     @Override

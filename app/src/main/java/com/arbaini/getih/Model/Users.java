@@ -12,13 +12,17 @@ public class Users {
 
     private String Alamat;
 
-    public Users(String noHp, String golDar, String beratBadan, String email, String nama, String alamat) {
+    public Users() {
+    }
+
+    public Users(String userid, String noHp, String golDar, String beratBadan, String email, String nama, String alamat) {
         NoHp = noHp;
         GolDar = golDar;
         BeratBadan = beratBadan;
         Email = email;
         this.nama = nama;
         Alamat = alamat;
+        UserId = userid;
     }
 
     public String getUserId() {

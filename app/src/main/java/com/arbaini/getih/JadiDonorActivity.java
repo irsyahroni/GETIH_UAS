@@ -58,6 +58,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -156,28 +157,25 @@ public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEven
     public void onKeyEntered(String key, GeoLocation location) {
         Log.d("HASILGEOQ",key);
         DatabaseReference tempRef = FirebaseDatabase.getInstance().getReference("users").child(key);
-        tempRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                try {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Users users = postSnapshot.getValue(Users.class);
-                        recordsList.add(users);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+       tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+               Users users = dataSnapshot.getValue(Users.class);
+               //Log.d("TAG",users.getEmail());
+               String emails = "hikmawan1232@gmail.com";
+               if(emails.equals(users.getEmail())){
 
+                   recordsList.add(users);
+                   mAdapter.notifyDataSetChanged();
 
-            }
+               }}
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+           }
+       });
 
     }
 
