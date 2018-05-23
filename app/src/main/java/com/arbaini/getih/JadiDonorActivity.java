@@ -2,8 +2,10 @@ package com.arbaini.getih;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Looper;
@@ -17,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -70,14 +73,8 @@ import java.util.List;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEventListener {
+public class JadiDonorActivity extends AppCompatActivity {
 
-    private static final GeoLocation INITIAL_CENTER = new GeoLocation(37.7789, -122.4017);
-    private static final int INITIAL_ZOOM_LEVEL = 14;
-    private static final String GEO_FIRE_DB = "https://publicdata-transit.firebaseio.com";
-    private static final String GEO_FIRE_REF = GEO_FIRE_DB + "/_geofire";
-    private GoogleMap map;
-    private Circle searchCircle;
     private GeoFire geoFire;
     private GeoQuery geoQuery;
 
@@ -93,8 +90,8 @@ public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEven
     private long UPDATE_INTERVAL = 5 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
 
-    private Button btnCari;
-
+    private Button btnCari,btnselesaitmb;
+    private Dialog dialog;
     private LocationCallback mLocationcallback;
 
     private ProgressDialog progressDialog;
@@ -107,16 +104,26 @@ public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEven
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Users> recordsList = new ArrayList<>();
     String userId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadi_donor);
 
 
-        jdDonor = findViewById(R.id.btn_jadidonor);
-        btnCari = findViewById(R.id.btn_cari_donor);
+        jdDonor = findViewById(R.id.cv_donorkan);
+        progressDialog = new ProgressDialog(JadiDonorActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
 
-        initRecyleView();
+        dialog = new Dialog(JadiDonorActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.pop);
+        btnselesaitmb = dialog.findViewById(R.id.buttonTambah);
+
+
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("DonorLocation");
         userId = auth.getCurrentUser().getUid();
@@ -132,72 +139,21 @@ public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEven
         jdDonor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startLocationUpdates();
             }
         });
 
-        btnCari.setOnClickListener(new View.OnClickListener() {
+        btnselesaitmb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cariLocation();
+                startActivity(new Intent(JadiDonorActivity.this,MainActivity.class));
+                finish();
             }
         });
 
     }
 
-    private void cariLocation() {
-
-        this.geoQuery = this.geoFire.queryAtLocation(geoLocation, 100);
-        geoQuery.addGeoQueryEventListener(this);
-
-    }
-
-
-    @Override
-    public void onKeyEntered(String key, GeoLocation location) {
-        Log.d("HASILGEOQ",key);
-        DatabaseReference tempRef = FirebaseDatabase.getInstance().getReference("users").child(key);
-
-       tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-               Users users = dataSnapshot.getValue(Users.class);
-               //Log.d("TAG",users.getEmail());
-               String emails = "hikmawan1232@gmail.com";
-               if(emails.equals(users.getEmail())){
-
-                   recordsList.add(users);
-                   mAdapter.notifyDataSetChanged();
-
-               }}
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-
-           }
-       });
-
-    }
-
-    @Override
-    public void onKeyExited(String key) {
-
-    }
-
-    @Override
-    public void onKeyMoved(String key, GeoLocation location) {
-
-    }
-
-    @Override
-    public void onGeoQueryReady() {
-
-    }
-
-    @Override
-    public void onGeoQueryError(DatabaseError error) {
-
-    }
 
 
     @SuppressLint("RestrictedApi")
@@ -263,19 +219,24 @@ public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEven
         Log.d("AKURASI", Float.toString(accuracy));
 
         if (accuracy < 50) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            progressDialog.show();
             geoLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
 
             geoFire.setLocation(auth.getUid(), geoLocation, new GeoFire.CompletionListener() {
                 @Override
                 public void onComplete(String key, DatabaseError error) {
-                    Toast.makeText(getApplicationContext(),"Sukses",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    dialog.show();
+
 
 
                 }
             });
             stopLocUpdate();
 
+        }else{
+            Toast.makeText(getApplicationContext(),"Gagal mendapatkan lokasi saat ini, coba lagi..",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -311,12 +272,5 @@ public class JadiDonorActivity extends AppCompatActivity implements GeoQueryEven
         Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
     }
 
-    private void initRecyleView(){
-        recyclerView = (RecyclerView) findViewById(R.id.rv_layout);
-        mAdapter = new RVAdapter(recordsList);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-    }
+
 }

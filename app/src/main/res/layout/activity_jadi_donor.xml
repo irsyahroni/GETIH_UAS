@@ -4,32 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JadiDonorActivity">
+    tools:context="com.arbaini.getih.JadiDonorActivity">
 
 
-    <Button
-        android:id="@+id/btn_jadidonor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/btn_cari_donor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="118dp"
-        android:text="Cari" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_layout"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="192dp" />
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/imageViewDonor"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/ic_donor" />
+
+
+            <TextView
+                android:id="@+id/tv_jadidonor_syarat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageViewDonor"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Syarat untuk menjadi pendonor yaitu memiliki berat badan minimal 45Kg dan berjarak minimal 3 bulan dari donor darah terakhir. Data diri Anda juga akan di proses oleh sistem."
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_jadidonor_syarat"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+
+                android:text="Apakah anda yakin ingin menjadi pendonor dan mendonorkan darah?"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/cv_donorkan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="Donorkan" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 </RelativeLayout>
