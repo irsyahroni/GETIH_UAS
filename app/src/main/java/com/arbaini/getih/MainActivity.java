@@ -55,12 +55,11 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 //
-//        cvCariDonor.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this,CariDonorActivity.class));
-//            }
-//        });
+        cvCariDonor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,CariDonorActivity.class)); }
+        });
 //
 //        cvRiwayatDonor.setOnClickListener(new View.OnClickListener() {
 //            @Override

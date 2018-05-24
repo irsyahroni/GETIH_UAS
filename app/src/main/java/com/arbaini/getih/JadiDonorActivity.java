@@ -111,7 +111,7 @@ public class JadiDonorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadi_donor);
 
-
+        getSupportActionBar().setTitle("Jadi Donor");
         jdDonor = findViewById(R.id.cv_donorkan);
         progressDialog = new ProgressDialog(JadiDonorActivity.this);
         progressDialog.setCancelable(false);

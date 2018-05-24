@@ -82,6 +82,7 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cari_donor);
+        getSupportActionBar().setTitle("Cari Donor");
         initRecyleView();
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("DonorLocation");
@@ -103,17 +104,27 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
 
         dialog = new Dialog(CariDonorActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.pop);
+        dialog.setContentView(R.layout.popcari);
         cari = dialog.findViewById(R.id.buttonCari);
         spinner1 = dialog.findViewById(R.id.et_cari_goldarah);
+        dialog.show();
         spinner1.setOnItemSelectedListener(new SpinnerSelectedListener1());
+
         cari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startLocationUpdates();
+                dialog.dismiss();
             }
         });
 
+
+    }
+
+    private void cariLocation() {
+
+        this.geoQuery = this.geoFire.queryAtLocation(geoLocation, 15);
+        geoQuery.addGeoQueryEventListener(this);
 
     }
 
@@ -127,8 +138,8 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Users users = dataSnapshot.getValue(Users.class);
                 //Log.d("TAG",users.getEmail());
-                String emails = "hikmawan1232@gmail.com";
-                if(emails.equals(users.getEmail())){
+                String emails = stGolDar;
+                if(emails.equals(users.getGolDar())){
 
                     recordsList.add(users);
                     mAdapter.notifyDataSetChanged();
@@ -167,6 +178,8 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
 
     @SuppressLint("RestrictedApi")
     protected void startLocationUpdates() {
+
+        progressDialog.show();
 
         // Create the location request to start receiving updates
         mLocationRequest = new LocationRequest();
@@ -230,15 +243,8 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
         if (accuracy < 50) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             geoLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
-
-            geoFire.setLocation(auth.getUid(), geoLocation, new GeoFire.CompletionListener() {
-                @Override
-                public void onComplete(String key, DatabaseError error) {
-                    Toast.makeText(getApplicationContext(),"Sukses",Toast.LENGTH_SHORT).show();
-
-
-                }
-            });
+            cariLocation();
+            progressDialog.dismiss();
             stopLocUpdate1();
 
         }
@@ -279,12 +285,7 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
         stGolDar = Goldar;
 
     }
-    private void cariLocation() {
 
-        this.geoQuery = this.geoFire.queryAtLocation(geoLocation, 15);
-        geoQuery.addGeoQueryEventListener(this);
-
-    }
 
     public void toaster() {
         Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
@@ -301,7 +302,7 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
     public class SpinnerSelectedListener1 implements AdapterView.OnItemSelectedListener {
 
         //get strings of first item
-        String firstItem = String.valueOf(spinner1.getSelectedItem());
+        String firstItem = "A";
 
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             if (firstItem.equals(String.valueOf(spinner1.getSelectedItem()))) {
