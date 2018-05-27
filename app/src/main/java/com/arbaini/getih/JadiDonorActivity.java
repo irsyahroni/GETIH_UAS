@@ -235,9 +235,10 @@ public class JadiDonorActivity extends AppCompatActivity {
             });
             stopLocUpdate();
 
-        }else{
+        }/*else{
             Toast.makeText(getApplicationContext(),"Gagal mendapatkan lokasi saat ini, coba lagi..",Toast.LENGTH_SHORT).show();
-        }
+            stopLocUpdate();
+        }*/
 
 
     }

@@ -123,7 +123,7 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
 
     private void cariLocation() {
 
-        this.geoQuery = this.geoFire.queryAtLocation(geoLocation, 15);
+        this.geoQuery = this.geoFire.queryAtLocation(geoLocation, 1500);
         geoQuery.addGeoQueryEventListener(this);
 
     }
@@ -136,15 +136,19 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
         tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 Users users = dataSnapshot.getValue(Users.class);
-                //Log.d("TAG",users.getEmail());
+
+                Log.d("TAG",users.getEmail());
                 String emails = stGolDar;
                 if(emails.equals(users.getGolDar())){
 
                     recordsList.add(users);
                     mAdapter.notifyDataSetChanged();
 
-                }}
+                }
+
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -240,7 +244,7 @@ public class CariDonorActivity extends AppCompatActivity implements GeoQueryEven
 
         Log.d("AKURASI", Float.toString(accuracy));
 
-        if (accuracy < 50) {
+        if (accuracy < 1000) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             geoLocation = new GeoLocation(location.getLatitude(), location.getLongitude());
             cariLocation();

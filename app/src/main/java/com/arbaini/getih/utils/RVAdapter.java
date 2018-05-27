@@ -17,12 +17,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     private List<Users> recordsList;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView rv_nama, rv_detail;
+        public TextView rv_nama, rv_alamat,rv_nohp,rv_darah;
 
         ViewHolder(View view){
             super(view);
-            rv_nama = (TextView) view.findViewById(R.id.tv_rv_name);
-            rv_detail = (TextView) view.findViewById(R.id.tv_rv_detail);
+            rv_nama = (TextView) view.findViewById(R.id.tv_rvitem_nama1);
+            rv_darah = (TextView) view.findViewById(R.id.tv_rvitem_darah);
+            rv_nohp = (TextView) view.findViewById(R.id.tv_rvitem_phone1);
+            rv_alamat = (TextView) view.findViewById(R.id.tv_rvitem_lokasi1);
         }
     }
 
@@ -41,7 +43,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Users users = recordsList.get(position);
-        holder.rv_nama.setText(users.getEmail());
+        holder.rv_nama.setText(users.getAlamat());
+        holder.rv_alamat.setText(users.getNama());
+        holder.rv_darah.setText(users.getGolDar());
+        holder.rv_nohp.setText(users.getNoHp());
         //holder.rv_detail.setText(users.getNoHp());
     }
 
