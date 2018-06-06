@@ -8,14 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.arbaini.getih.utils.PrefManager;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     private Button mBtnWelcome;
     private TextView tvDot1,tvDot2;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefManager = new PrefManager(this);
+        if(prefManager.getStatusLogin()){
+            startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+            finish();
+        }
         setContentView(R.layout.activity_welcome);
 
         mBtnWelcome = findViewById(R.id.btn_welcome_start);

@@ -7,17 +7,22 @@ public class Users {
     private String GolDar;
     private String BeratBadan;
     private String Email;
-
+    private String nama;
 
 
     private String Alamat;
 
-    public Users( String noHp, String golDar, String beratBadan, String email, String alamat) {
+    public Users() {
+    }
+
+    public Users(String userid, String noHp, String golDar, String beratBadan, String email, String nama, String alamat) {
         NoHp = noHp;
         GolDar = golDar;
         BeratBadan = beratBadan;
         Email = email;
+        this.nama = nama;
         Alamat = alamat;
+        UserId = userid;
     }
 
     public String getUserId() {
@@ -65,5 +70,14 @@ public class Users {
 
     public void setAlamat(String alamat) {
         Alamat = alamat;
+    }
+
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 }

@@ -84,7 +84,7 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
 
                     String userId = auth.getCurrentUser().getUid();
-                    Users users = new Users(stNoHP,stGolDar,stBB,stEmail,stAlamat);
+                    Users users = new Users(userId,stNoHP,stGolDar,stBB,stEmail,stAlamat,stNama);
                     databaseReference.child("users").child(userId).setValue(users);
                     Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                     Bundle extras = new Bundle();
@@ -139,6 +139,13 @@ public class SignupActivity extends AppCompatActivity {
         stAlamat = etAlamat.getText().toString();
         if (TextUtils.isEmpty(stAlamat)) {
             etAlamat.setError("Tidak boleh Kosong");
+            return;
+        }
+
+
+        stNama = etNama.getText().toString();
+        if (TextUtils.isEmpty(stNama)) {
+            etNama.setError("Tidak boleh Kosong");
             return;
         }
     }

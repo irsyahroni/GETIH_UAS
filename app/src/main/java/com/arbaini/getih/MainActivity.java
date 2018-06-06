@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("GETiH App");
 
-
+/*
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         stNama = extras.getString("NAMA");
@@ -46,22 +46,21 @@ public class MainActivity extends AppCompatActivity{
         stGolDar = extras.getString("GOLDAR");
         stBB = extras.getString("BB");
 
-        tvNama.setText(stNama);
+        tvNama.setText(stNama);*/
 
-//        cvJadiDonor.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this,JadiDonorActivity.class));
-//            }
-//        });
-
+        cvJadiDonor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,JadiDonorActivity.class));
+            }
+        });
+//
         cvCariDonor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,CariDonorActivity.class));
-            }
+                startActivity(new Intent(MainActivity.this,CariDonorActivity.class)); }
         });
-
+//
 //        cvRiwayatDonor.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
