@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "353750776465",
+    "firebase_url": "https://getih-e2ba8.firebaseio.com",
+    "project_id": "getih-e2ba8",
+    "storage_bucket": "getih-e2ba8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353750776465:android:e93e98a64cdba63d",
+        "android_client_info": {
+          "package_name": "com.arbaini.getih"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353750776465-a7l3j6d5jp56tiqbjo29iu34rcimb3mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arbaini.getih",
+            "certificate_hash": "b9197f7e3056e052ade39b761289946cc3890d00"
+          }
+        },
+        {
+          "client_id": "353750776465-85tiq04ln32junopdmdg0384pscapajq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvpbchBZOeX65M_MdeCME_f572oYZk1Qk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353750776465-85tiq04ln32junopdmdg0384pscapajq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
